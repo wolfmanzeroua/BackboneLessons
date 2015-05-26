@@ -36,8 +36,24 @@ var Person = Backbone.Model.extend({
         age: 32,
         job: 'ThinkMobile, javascript developer'
     },
-    walk: function () {
-        return this.get ('name') + ' is walking';
+// не працює валідите автоматично як в уроці зате працює person.isValid
+// також знайшов на стеку http://stackoverflow.com/questions/14426155/backbone-validate-does-not-work
+    //var person = new Person({name: 'Николай',age:31, jobb: 'Веб-разработчик'},{validate:true});
+    //{validate:true}
+    validate: function( attrs){
+      console.log('Валідація', attrs);
+
+        if (attrs.age <0) {
+            return 'Возраст должен быть положительным!';
+        }
+
+        if ( !attrs.name ) {
+            return 'Чувак, ты же не думаешь, что у персоны не может быть имени?';
+        }
+    },
+
+    work: function () {
+        return this.get ('name') + ' is working';
     }
 
 });
@@ -48,6 +64,15 @@ var Person = Backbone.Model.extend({
  person.get('age')
  person.set('name','Ira')
  * person.toJSON()
+ * work: function() {
+ return this.get('name') + ' is working.';
+
+це не працює краще дивитися валідийт ерор
+  person.on('error', function(model, error){
+ console.log(error);
+ };
+щоб пройшло валідацію треба ставити опції
+ person.set({'age': -1},{validate: true});
  *
  *
  */
