@@ -65,11 +65,13 @@ console.log('Екземпляр класа створено',this.model);
     tagName:'li',
     className:'myClass',
     id:'HeroID',
+    template: _.template('<strong> <%= name %> </strong> ( <%= age %> ) - <%= job %> '),
 
     render: function(){  //відповідає за наповнення документа ХТМЛ кодом
         console.log('Запустили Рендер');
       // qце антипаттерн, так працювати не треба краще шаблонами
-        this.$el.html(this.model.get('name')+ ' (' + this.model.get('age') + ' ) - ' + this.model.get('job'));
+       // this.$el.html(this.model.get('name')+ ' (' + this.model.get('age') + ' ) - ' + this.model.get('job'));
+        this.$el.html(this.template(this.model.toJSON()));
     }
 });
 
@@ -94,5 +96,6 @@ var personView = new PersonView({model:person});
  person.set({'age': -1},{validate: true});
  *
  * personView.$el
+ * $(document.body).append(personView.el)
  *
  */
