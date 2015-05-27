@@ -57,6 +57,25 @@ var Person = Backbone.Model.extend({
     }
 
 });
+
+var PersonView = Backbone.View.extend({
+    initialize: function () {
+console.log('Екземпляр класа створено',this.model);
+    },
+    tagName:'li',
+    className:'myClass',
+    id:'HeroID',
+
+    render: function(){  //відповідає за наповнення документа ХТМЛ кодом
+        console.log('Запустили Рендер');
+      // qце антипаттерн, так працювати не треба краще шаблонами
+        this.$el.html(this.model.get('name')+ ' (' + this.model.get('age') + ' ) - ' + this.model.get('job'));
+    }
+});
+
+var person = new Person;
+var personView = new PersonView({model:person});
+
 //console.log(Backbone);
 /* in Google console
  var person = new Person
@@ -74,5 +93,6 @@ var Person = Backbone.Model.extend({
 щоб пройшло валідацію треба ставити опції
  person.set({'age': -1},{validate: true});
  *
+ * personView.$el
  *
  */
