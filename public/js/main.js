@@ -65,18 +65,26 @@ console.log('Екземпляр класа створено',this.model);
     tagName:'li',
     className:'myClass',
     id:'HeroID',
-    template: _.template('<strong> <%= name %> </strong> ( <%= age %> ) - <%= job %> '),
+    //template: _.template($('#person-id').html()),
+// варіант 2
+    template:'#person-id',
 
     render: function(){  //відповідає за наповнення документа ХТМЛ кодом
         console.log('Запустили Рендер');
       // qце антипаттерн, так працювати не треба краще шаблонами
        // this.$el.html(this.model.get('name')+ ' (' + this.model.get('age') + ' ) - ' + this.model.get('job'));
-        this.$el.html(this.template(this.model.toJSON()));
+        //this.$el.html(this.template(this.model.toJSON()));
+        //варіант 2
+        var template = _.template($(this.template).html());
+        this.$el.html(template(this.model.toJSON()));
     }
 });
 
 var person = new Person;
 var personView = new PersonView({model:person});
+
+var person2 = new Person({name: 'Gogi', age:25});
+var personView2 = new PersonView({model:person2});
 
 //console.log(Backbone);
 /* in Google console
