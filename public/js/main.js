@@ -30,6 +30,7 @@
 //
 //});
 
+// модель однієї людини
 var Person = Backbone.Model.extend({
     defaults:{
         name: 'Andrey',
@@ -51,13 +52,16 @@ var Person = Backbone.Model.extend({
             return 'Чувак, ты же не думаешь, что у персоны не может быть имени?';
         }
     },
-
     work: function () {
         return this.get ('name') + ' is working';
     }
-
+});
+// список людей
+var PeopleCollection = Backbone.Collection.extend({
+model: Person
 });
 
+// вид, відображення однієї людини
 var PersonView = Backbone.View.extend({
     initialize: function () {
 console.log('Екземпляр класа створено',this.model);
@@ -80,11 +84,37 @@ console.log('Екземпляр класа створено',this.model);
     }
 });
 
-var person = new Person;
-var personView = new PersonView({model:person});
+// при роботі з колекцією в ручну дані не передають
+//var person = new Person;
+//var personView = new PersonView({model:person});
+//
+//var person2 = new Person({name: 'Gogi', age:25});
+//var personView2 = new PersonView({model:person2});
 
-var person2 = new Person({name: 'Gogi', age:25});
-var personView2 = new PersonView({model:person2});
+var peopleCollection = new PeopleCollection([
+    {
+        nsme: 'Olgs',
+        age: 20,
+        job:'Reception'
+
+    },
+    {
+        nsme: 'Ira',
+        age: 30,
+        job:'HR'
+
+    },
+    {
+        nsme: 'Roman',
+        age: 32,
+        job:'IT coach'
+
+    }
+]);
+
+// при роботі з колекцією в ручну дані не передають
+//peopleCollection.add(person);
+//peopleCollection.add(person2);
 
 //console.log(Backbone);
 /* in Google console
@@ -105,5 +135,5 @@ var personView2 = new PersonView({model:person2});
  *
  * personView.$el
  * $(document.body).append(personView.el)
- *
- */
+ * var model = peopleCollection.at(1)
+ */// model.set('name','Taras');
